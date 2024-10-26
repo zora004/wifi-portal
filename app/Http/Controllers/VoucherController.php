@@ -50,9 +50,36 @@ class VoucherController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Voucher $voucher)
+    public function update(Request $request, $voucher)
     {
-        //
+        $check_voucher = Voucher::where('code', $voucher)->first();
+        if(!$check_voucher){
+            return response()->json([
+                'title' => 'Not found',
+                'message' => 'Voucher not found!'
+            ], 404);
+        }
+
+        if($check_voucher->expiry < date('Y-m-d H:i:s', strtotime(now()))){
+            return response()->json([
+                'title' => 'Expired',
+                'message' => 'Your voucher has expired.'
+            ], 419);
+        }
+
+        if($check_voucher->status === 1){
+            return response()->json([
+                'title' => 'Used',
+                'message' => 'Sorry, it seems that your voucher is already been used.'
+            ], 409);
+        }
+        $check_voucher->status = 1;
+        $check_voucher->save();
+
+        return response()->json([
+                'title' => 'Success',
+                'message' => 'Congratulations! You are now connected to the internet.'
+        ], 200);
     }
 
     /**
