@@ -12,7 +12,7 @@ class VoucherController extends Controller
      */
     public function index()
     {
-        //
+        return view('contents.dashboard');
     }
 
     /**
@@ -55,22 +55,22 @@ class VoucherController extends Controller
         $check_voucher = Voucher::where('code', $voucher)->first();
         if(!$check_voucher){
             return response()->json([
-                'title' => 'Not found',
-                'message' => 'Voucher not found!'
+                'title' => 'Invalid Voucher',
+                'message' => 'The voucher code you entered is invalid. Please double-check your code.'
             ], 404);
         }
 
         if($check_voucher->expiry < date('Y-m-d H:i:s', strtotime(now()))){
             return response()->json([
-                'title' => 'Expired',
-                'message' => 'Your voucher has expired.'
+                'title' => 'Expired Voucher',
+                'message' => 'Oops! It looks like your voucher has expired.'
             ], 419);
         }
 
         if($check_voucher->status === 1){
             return response()->json([
-                'title' => 'Used',
-                'message' => 'Sorry, it seems that your voucher is already been used.'
+                'title' => 'Voucher Status Update',
+                'message' => 'Unfortunately, your voucher has already been used. Please check your voucher details.'
             ], 409);
         }
         $check_voucher->status = 1;
@@ -78,7 +78,7 @@ class VoucherController extends Controller
 
         return response()->json([
                 'title' => 'Success',
-                'message' => 'Congratulations! You are now connected to the internet.'
+                'message' => 'Congratulations! You are now successfully connected to the internet. Enjoy your shuttle browsing experience!'
         ], 200);
     }
 

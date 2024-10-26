@@ -1,98 +1,46 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>C-ONE Wifi Portal</title>
-        <link rel="icon" href="{{ asset('/assets/icons/favicon.ico') }}" type="image/x-icon">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        @vite('resources/css/app.css')
-        <style>
-            .bg-image{
-                position: relative;
-                width: 100%;
-                height: 100vh;
-                background-image: url('/assets/images/background.jpg');
-                background-size: 100%;
-                background-repeat: no-repeat;
-                background-position: center;
-            }
-            .bg-image::after{
-                content: '';
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                top: 0;
-                left: 0;
-                background-color: rgba(0,0,0,0.55);
-            }
-            #loading {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(255, 255, 255, 0.8);
-                z-index: 9999; /* Make sure it’s on top of other elements */
-                display: none; /* Initially hidden */
-                justify-content: center;
-                align-items: center;
-            }
-            .spinner {
-                border: 5px solid rgba(255, 255, 255, 0.3);
-                border-top: 5px solid #9c5e0c; /* Spinner color */
-                border-radius: 50%;
-                width: 50px;
-                height: 50px;
-                animation: spin 1s linear infinite; /* Spin animation */
-                margin: auto;
-                margin-top: 45vh;
-            }
-            @keyframes spin {
-                0% { transform: rotate(0deg); }
-                100% { transform: rotate(360deg); }
-            }
-        </style>
-    </head>
-    <body class="h-screen flex items-center justify-center bg-image">
-        {{-- bg-gray-100 --}}
-        {{-- dark:bg-slate-900 --}}
-        <div class="bg-white/10 backdrop-blur-md px-6 py-8 rounded-lg ring-1 ring-slate-900/5 shadow-xl w-full max-w-sm z-40">
-                <div class="bg-green-100 text-green-700 p-4 rounded-lg mb-4 opacity-0 transition-opacity duration-500 ease-in-out hidden" id="success_container">
-                    <p id="success_msg" class="text-sm">success message</p> 
-                </div>
-                <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-4 opacity-0 transition-opacity duration-500 ease-in-out hidden" id="error_container">
-                    <p id="error_msg" class="text-sm">error message</p>
-                </div>
-                
-                <div class="space-y-3">
-                    <img src="{{ asset('/assets/images/coffeelogo_mockup_transparent.png') }}" alt="asdas">
-                    <p class="text-center text-sm text-white subpixel-antialiased font-light italic ">"Where Every Sip is a Smash Hit!"</p>
-                    <label for="voucher" class="block text-sm font-medium text-white uppercase">Voucher Code</label>
-                    <input type="text" name="voucher" id="voucher" style="text-transform: uppercase;" class="peer required:border-yellow-500 mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-brown-500 focus:border-brown-500 font-bold" required placeholder="SHUTTLE-FITG-WBER">
-                    <p class="mt-2 invisible peer-invalid:visible text-yellow-600 text-sm">
-                    Please provide a voucher code.
-                    </p>
-                </div>
-                <div class="items-center justify-center hidden" id="loading-container">
-                    <span class="w-full relative inline-flex">
-                        <button type="button" class="w-full inline-flex items-center justify-center py-2 px-4 my-2 font-semibold leading-6 text-sm shadow rounded-md text-yellow-500 bg-[#67391b]  transition ease-in-out duration-150 cursor-not-allowed ring-1 ring-slate-900/10 dark:ring-slate-200/20" disabled="">
-                        Processing...
-                        </button>
-                        <span class="flex absolute h-4 w-4 top-0 right-0 -mt-0 -mr-1">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-4 w-4 bg-yellow-500"></span>
-                        </span>
+@extends('layouts.app')
+
+@section('title', 'Dashboard')
+
+@section('content')
+<body class="h-screen flex items-center justify-center bg-image">
+    <div class="bg-white/10 backdrop-blur-md px-6 py-8 rounded-lg ring-1 ring-slate-900/5 shadow-xl w-full max-w-sm z-40">
+            <div class="bg-white shadow-md p-4 rounded-lg mb-4 transition-opacity duration-500 ease-in-out opacity-100 border border-green-300 hidden" id="success_container">
+                <p id="success_title" class="text-sm font-bold uppercase text-green-600">success message</p> 
+                <p id="success_msg" class="text-sm italic text-gray-700">success message</p> 
+            </div>
+            <div class="bg-red-100 text-red-700 p-4 rounded-lg mb-4 opacity-0 transition-opacity duration-500 ease-in-out hidden" id="error_container">
+                <p id="error_title" class="text-sm font-bold uppercase">error title</p>
+                <p id="error_msg" class="text-sm italic">error message</p>
+            </div>
+            
+            <div class="space-y-3">
+                <img src="{{ asset('/assets/images/coffeelogo_mockup_transparent2.png') }}" alt="asdas">
+                <p class="text-center text-sm text-white subpixel-antialiased font-light italic ">"Where Every Sip is a Smash Hit!"</p>
+                <label for="voucher" class="block text-sm font-medium text-white uppercase">Voucher Code</label>
+                <input type="text" name="voucher" id="voucher" style="text-transform: uppercase;" class="peer required:border-yellow-500 mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-brown-500 focus:border-brown-500 font-bold" required placeholder="SHUTTLE-FITG-WBER">
+                <p class="mt-2 invisible peer-invalid:visible text-yellow-600 text-sm">
+                Please provide a voucher code.
+                </p>
+            </div>
+            <div class="items-center justify-center hidden" id="loading-container">
+                <span class="w-full relative inline-flex">
+                    <button type="button" class="w-full inline-flex items-center justify-center py-2 px-4 my-2 font-semibold leading-6 text-sm shadow rounded-md text-yellow-500 bg-[#67391b]  transition ease-in-out duration-150 cursor-not-allowed ring-1 ring-slate-900/10 dark:ring-slate-200/20" disabled="">
+                    Processing...
+                    </button>
+                    <span class="flex absolute h-4 w-4 top-0 right-0 -mt-0 -mr-1">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-4 w-4 bg-yellow-500"></span>
                     </span>
-                </div>
-                <button id="verify" type="submit" class="w-full py-2 px-4 my-2 bg-yellow-500 text-white font-semibold rounded-md shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                Submit
-                </button>
-        </div>
-        <div id="loading">
-            <div class="spinner"></div>
-        </div>
+                </span>
+            </div>
+            <button id="verify" type="submit" class="w-full py-2 px-4 my-2 bg-yellow-500 text-white font-semibold rounded-md shadow-sm hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500">
+            Submit
+            </button>
+    </div>
+    <div id="loading">
+        <div class="spinner"></div>
+    </div>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
         $(window).on('load', function() {
@@ -138,12 +86,12 @@
                             const title = response.title
                             const message = response.message
                             disableLoading()
-                            success(message)
+                            success(title, message)
                         }, error: function(response){
                             const title = response.responseJSON.title
                             const message = response.responseJSON.message
                             disableLoading()
-                            error(message)
+                            error(title, message)
                         }
                     })
                 }else{
@@ -154,12 +102,13 @@
                 }
             }
 
-            function success(message) {
+            function success(title, message) {
                 const fadeElement = document.getElementById('success_container');
                 $('#success_container').removeClass('hidden');
                 $('#error_container').addClass('hidden');
 
-                $('#success_msg').html(`<i class="fa-regular fa-circle-check"></i> ${message}`);
+                $('#success_title').html(`<i class="fa-regular fa-circle-check"></i> ${title}`);
+                $('#success_msg').html(`~${message}`);
                 if (fadeTimeout) {
                     clearTimeout(fadeTimeout);
                     fadeElement.classList.remove('opacity-100', 'hidden');
@@ -185,12 +134,13 @@
                 }, 5000); // Show the message for 5 seconds
             }
 
-            function error(message) {
+            function error(title, message) {
                 const fadeElement = document.getElementById('error_container');
                 $('#success_container').addClass('hidden');
                 $('#error_container').removeClass('hidden');
 
-                $('#error_msg').html(`<i class="fa-solid fa-circle-exclamation"></i> ${message}`);
+                $('#error_title').html(`<i class="fa-solid fa-circle-exclamation"></i> ${title}`);
+                $('#error_msg').html(`~${message}`);
                 if (errorFadeTimeout) {
                     clearTimeout(errorFadeTimeout);
                     fadeElement.classList.remove('opacity-100', 'hidden');
@@ -232,4 +182,4 @@
         });
     </script>
 </body>
-</html>
+@endsection
