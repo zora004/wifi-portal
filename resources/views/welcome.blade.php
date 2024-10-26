@@ -4,6 +4,37 @@
 
 @section('content')
 <body class="h-screen flex items-center justify-center bg-image">
+
+    <div class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="sm:flex sm:items-start">
+                    <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
+                    <svg class="h-6 w-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                    </svg>
+                    </div>
+                    <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                    <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Terms & Agreement</h3>
+                    <div class="mt-2">
+                        <p class="text-sm text-gray-500">Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.</p>
+                    </div>
+                    </div>
+                </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" class="inline-flex w-full justify-center rounded-md bg-green-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto">Accept</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+      
+
+
     <div class="bg-white/10 backdrop-blur-md px-6 py-8 rounded-lg ring-1 ring-slate-900/5 shadow-xl w-full max-w-sm z-40">
             <div class="bg-white shadow-md p-4 rounded-lg mb-4 transition-opacity duration-500 ease-in-out opacity-100 border border-green-300 hidden" id="success_container">
                 <p id="success_title" class="text-sm font-bold uppercase text-green-600">success message</p> 
@@ -44,6 +75,19 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
         $(window).on('load', function() {
+            // Get modal elements
+            const modal = document.getElementById("agreementModal");
+            const agreeButton = document.getElementById("agreeButton");
+
+            modal.classList.remove("hidden");
+
+            // Function to handle agreement
+            agreeButton.onclick = function() {
+                // Handle agreement logic (e.g., save to session or database)
+                alert("You have agreed to the terms.");
+                modal.classList.add("hidden");
+            }
+
             $('#loading').fadeOut(); // Hide the loading spinner once the page is fully loaded
             let fadeTimeout, errorFadeTimeout;
 
